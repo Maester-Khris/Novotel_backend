@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\Dashboardcontroller@alldataUpdateSynceLastSync');
-Route::get('/home-chart', 'App\Http\Controllers\Dashboardcontroller@getChartSatistic');
-Route::get('/company-profile/{company_name}', 'App\Http\Controllers\Dashboardcontroller@companyInfos');
-Route::get('/localisation', 'App\Http\Controllers\Dashboardcontroller@locationsWithInfos');
-Route::get('/infos-updates/{commune}', 'App\Http\Controllers\Dashboardcontroller@communeInfos');
+Route::get('/', 'App\Http\Controllers\DashboardController@alldataUpdateSynceLastSync');
+Route::get('/home-chart', 'App\Http\Controllers\DashboardController@getChartSatistic');
+Route::get('/company-profile/{company_name}', 'App\Http\Controllers\DashboardController@companyInfos');
+Route::get('/localisation', 'App\Http\Controllers\DashboardController@locationsWithInfos');
+Route::get('/infos-updates/{commune}', 'App\Http\Controllers\DashboardController@communeInfos');
 
-Route::post('/seach-autocomplete','App\Http\Controllers\Dashboardcontroller@autoComplete');
+Route::post('/seach-autocomplete','App\Http\Controllers\DashboardController@autoComplete');
 Route::get('/scrapping','App\Http\Controllers\Testcontroller@scrapper');
 Route::get('/test','App\Http\Controllers\UtilityController@getplaceByCommune');
