@@ -1,0 +1,37 @@
+.search-input {
+    position: relative;
+}
+
+.autocom-box {
+    display: none;
+    height: auto;
+    width: 90%;
+    position: absolute;
+    left: 15px;
+    top: 50px;
+    border-radius: 5px;
+    background: #FFFFFF;
+}
+
+.autocom-box li:hover {
+    background: #999999;
+
+}
+
+.autocom-box li:hover a {
+    color: white !important;
+}
+
+.autocom-box li {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    list-style: none;
+    padding: 8px 12px;
+    display: none;
+    width: 100%;
+    cursor: default;
+    border-radius: 3px;
+    display: block;
+}
