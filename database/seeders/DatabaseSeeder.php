@@ -18,25 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        // ===================================
-        // $faker = Faker::create();
-        // $compnames = [];
-        // $stars = [1,2,3,4,5];
-        // $comp = \App\Models\Company::create([
-        //     'uuid' => Str::random(5),
-        //     'comp_name' => "Dreamchaser 3",
-        //     'comp_telephone' => '+237 6'.$faker->randomNumber(8),
-        //     'comp_location_id' => 2,
-        //     'comp_mail_address' => $faker->unique()->safeEmail(),
-        //     'comp_web_site' => 'www'.Str::random(6).'.docs.cmr',
-        //     'comp_standing_stars' => $faker->randomElement($stars),
-        //     'created_at' => Carbon::parse( $faker->dateTime() )->format('Y-m-d H:i:s')
-        // ]);
-        
-        // $resources = \App\Models\Resource::factory()->count(8)->create(['company_id'=> $comp->id ]);
-
-        
         // insert data for admin user
         DB::table('users')->insert([
             'uuid' => Str::uuid(),

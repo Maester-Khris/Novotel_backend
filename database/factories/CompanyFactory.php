@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 class CompanyFactory extends Factory
 {
@@ -33,7 +34,7 @@ class CompanyFactory extends Factory
             'comp_mail_address' => $this->faker->unique()->safeEmail(),
             'comp_web_site' => 'www'.Str::random(6).'.docs.cmr',
             'comp_standing_stars' => $this->faker->randomElement($stars),
-            'created_at' => $this->faker->dateTimeBetween('-2 year', 'now')
+            'created_at' => Carbon::parse($this->faker->dateTimeBetween('-2 year', 'now'))->format('Y-m-d H:i:s')
         ];
     }
 }

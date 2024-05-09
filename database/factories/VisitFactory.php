@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 class VisitFactory extends Factory
 {
@@ -39,7 +40,7 @@ class VisitFactory extends Factory
             'visit_end_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'client_coming_from' =>$this->faker->randomElement($world_place),
             'client_going_to' =>$this->faker->randomElement($world_place),
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now')
+            'created_at' => Carbon::parse($this->faker->dateTimeBetween('-1 year', 'now'))->format('Y-m-d H:i:s')
         ];
     }
 }

@@ -44,7 +44,7 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class);
     }
     public function getCompanyUuidAttribute(){
-        // $this->attributes['company_uuid'] = "eeze";
-        return $this->company->uuid;
+        $comp_uuid = isset($this->company->uuid) ? $this->company->uuid : "Is Admin no Company";
+        return $comp_uuid;
     }
 }

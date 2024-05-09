@@ -29,7 +29,8 @@ class ManagerController extends Controller
         $company = $company->create($comp);
         $manager = $company->users()->create($mana);
         $resources = $company->resources()->createMany($res);
-        return response()->json(["comp"=>$company, "mana"=>$manager, "res"=>$resources], 200);
+        $clients = Client::all();
+        return response()->json(["comp"=>$company, "mana"=>$manager, "res"=>$resources, "clts"=>$clients], 200);
     }
     public function addResource(Request $request, $companyid){
         $company = Company::find($companyid);

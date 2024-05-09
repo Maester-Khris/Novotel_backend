@@ -26,21 +26,14 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $syncTable = DB::table('DBsync')->where('id',1)->first()
-        // $user = Auth::user();
-        // dd($user);
-        // if($user){
-        //     View::share('last_sync', $user->last_visit);
-        // }
-        // View::composer('*', function ($view) {
-        //     $view->with('user', auth()->user());
-        // });
-        // View::share('last_sync', auth()->user()->last_visit);
         View::composer('*', function ($view) {
-            $user = auth()->user();
-            if ($user) {
-                $view->with('last_sync', $user->last_visit);
+            if($view->getName() != "errors"){
+                $user = auth()->user();
+                if ($user) {
+                    $view->with('last_sync', $user->last_visit);
+                }
             }
         });
+        
     }
 }

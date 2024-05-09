@@ -27,8 +27,14 @@ class SyncDataController extends Controller
             case 'resources':
                 $comp = Company::where('uuid',$request->data[0]["company_uuid"])->first();
                 foreach ($request->data as $entity) {
-                    $res = Resource::create($entity);
-                    $comp->resources()->save($res);
+                    $existing_model = Resource::where('uuid',$entity['uuid'])->first();
+                    if($existing_model != null){
+                        $existing_model->resource_availability = true;
+                        $existing_model->save();
+                    }else{
+                        $res = Resource::create($entity);
+                        $comp->resources()->save($res);
+                    }
                 }
                 break;
             case 'employees':
@@ -59,7 +65,6 @@ class SyncDataController extends Controller
                         $res->resource_availability = false;
                         $res->save();
                         $res->visit()->save($visit);
-
                     }
                 }
                 $comp->visits()->saveMany($newvisits);
@@ -70,6 +75,7 @@ class SyncDataController extends Controller
         }
         return response()->json('received', 200);
     }
+
     public function getDataForEmployee(Request $request){
         $last_local_sync = Carbon::parse($request->lastsync)->format('Y-m-d H:i:s');
         $now = Carbon::now()->format('Y-m-d H:i:s');
@@ -82,10 +88,8 @@ class SyncDataController extends Controller
             ->orWhereBetween('updated_at',[$last_local_sync, $now])
             ->get();
         return response()->json([$clts, $vsts, $res], 200);
-        // return response()->json([$clts, $vsts], 200);
-        // $clt = Client::find(3);
-        // return response()->json([$now, $last_local_sync], 200);
     }
+
     public function updateSyncDate(Request $request){
         DB::table('DBsync')
         ->where('id',1)

@@ -29,7 +29,7 @@ class UtilityController extends Controller
     public function getEmployeeByName(Request $request){
         $empl = User::where('full_name',$request->emp_name)->first();
         if(!$empl){
-            return response()->json("No user found", 404);
+            return response()->json("No user found");
         }
         return response()->json($empl, 200);
     }
