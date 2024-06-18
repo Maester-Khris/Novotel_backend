@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Chat;
 use App\Models\Visit;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Resource;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use DateTime;
 
 class SyncDataController extends Controller
@@ -95,6 +97,24 @@ class SyncDataController extends Controller
         ->where('id',1)
         ->update(['last_sync_date'=>$request->syncdate]);
         return response()->json('ok', 200);
+    }
+
+    public function getDataForAdmin(){
+        $admin = User::find(1);
+        $stats = ['companies'=> Company::all()->count(), "clients"=> Client::all()->count()];
+        $messages = DB::table('chats')
+            ->join('users','users.uuid','chats.sender_uuid')
+            ->select('chats.message','chats.sender_uuid','chats.receiver_uuid','chats.created_at','chats.message','users.full_name')
+            ->get();
+
+        return response()->json(["data"=>[$stats,$messages]], 200);
+    }
+
+    public function getStatsForAdmin(){
+        return response()->json(["data"=>[
+            "hotels"=> Company::all()->count(),
+            "clients"=> Client::all()->count()
+        ]], 200);
     }
 
 }

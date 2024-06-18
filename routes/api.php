@@ -49,3 +49,5 @@ Route::post('/company/user/{useruuid}/messages', 'App\Http\Controllers\ManagerCo
 // =============== DB Sync Routes =============================
 Route::post('/sync/entity','App\Http\Controllers\SyncDataController@syncData');
 Route::post('/sync/getEntity','App\Http\Controllers\SyncDataController@getDataForEmployee');
+Route::get('/admin/data','App\Http\Controllers\SyncDataController@getDataForAdmin');
+Route::get('/admin/stats','App\Http\Controllers\SyncDataController@getStatsForAdmin');

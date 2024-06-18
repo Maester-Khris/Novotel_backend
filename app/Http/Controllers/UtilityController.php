@@ -38,7 +38,7 @@ class UtilityController extends Controller
         $chat = Chat::create([
             'message'=>$request->message,
             'sender_uuid'=>$request->sender_uuid,
-            'receiver_uuid'=>$admin->uuid
+            'receiver_uuid'=> $request->receiver_uuid == "" ? $admin->uuid : $request->receiver_uuid
         ]);
         return response()->json($chat, 200);
     }
