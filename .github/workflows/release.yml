@@ -1,0 +1,19 @@
+name: Deploy to my shared web host
+on:
+  push:
+    branches: master
+jobs:
+  work_and_call_other:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First pipeline stage
+        uses: actions/checkout@v2
+      - name: First repo build 
+        run: echo "publishing changes"
+      - name: Second pipeline stage 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.ftp_host }}
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ./projects.nkcloudgo.com/
