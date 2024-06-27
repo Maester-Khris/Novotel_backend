@@ -16,15 +16,17 @@ class Company extends Model
      * client dont reaaly belong to a company since the are searchable throug the entire app
      * although to get the list of client that made a visit in a company go by visit and select all unique clientid
     */
-    // use to get resources
+    
+
     public function resources(){
         return $this->hasMany(Resource::class);
     }
-    // use to select employee
-    public function users(){
+    public function commodities(){
+        return $this->hasMany(Commodity::class);
+    }
+    public function users(){                    
         return $this->hasMany(User::class);
     }
-    // use to get the list of visits
     public function visits(){
         return $this->hasMany(Visit::class);
     }

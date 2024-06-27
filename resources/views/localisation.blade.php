@@ -16,6 +16,16 @@ h3{padding-top: 10px;}
 .badge{
       display:inline;  
 }
+.list_menu{
+      cursor: pointer;
+}
+.list_menu:hover{
+      background-color: #5e72e4;
+      color:white;
+}
+td:hover .menu_item{
+      color:black;
+}
 </style>
 @endpush
 @push('scripts')
@@ -68,7 +78,7 @@ h3{padding-top: 10px;}
                         </thead>
                         <tbody>
                               @foreach ($regions as $region)
-                                    <tr class="menu tab-reg-{{$loop->index}}"><td>{{$region}}</td></tr>
+                                    <tr class="menu tab-reg-{{$loop->index}}"><td class="list_menu">{{$region}}</td></tr>
                               @endforeach
                         </tbody>
                   </table>
@@ -94,8 +104,8 @@ h3{padding-top: 10px;}
                                     @while ($i < count($places_buckets))
                                           <tr>
                                                 @foreach ($places_buckets[$i] as $place)
-                                                      <td>
-                                                            <a href="{{url('/infos-updates',['commune' => $place->commune])}}"> {{$place->commune}} </a>
+                                                      <td class="">
+                                                            <a class="menu_item" href="{{url('/infos-updates',['commune' => $place->commune])}}"> {{$place->commune}} </a>
                                                             <span class="badge badge-primary badge-pill">{{$place->companies}}</span>
                                                       </td>
                                                 @endforeach

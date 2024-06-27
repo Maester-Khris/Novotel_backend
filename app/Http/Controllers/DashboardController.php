@@ -70,12 +70,16 @@ class DashboardController extends Controller
         // overall commune visits
         $all_visits = Visit::whereHas('company',function($query) use ($location_id){
             $query->where('comp_location_id',$location_id);
-        })->with(['client','company'])->paginate(5);   
+        })->with(['client','company'])->paginate(5);  
+        
+        // update to not let the interface empty
+        $companies_from_location = Company::where('comp_location_id',$location_id)->select('comp_name')->get();
         return view('insightupdate')
             ->with(compact('visits_ss_count'))
             ->with(compact('unique_client_visit_ss'))
             ->with(compact('location_string'))
-            ->with(compact('all_visits'));
+            ->with(compact('all_visits'))
+            ->with(compact('companies_from_location'));
     }
 
     public function companyInfos($company_name){
@@ -84,11 +88,19 @@ class DashboardController extends Controller
         $location = $places = DB::table('locations')->where('id',$company->comp_location_id)->first();
         $location_string = implode(', ',json_decode($location->place,true));
         $mana = User::where('company_id',$company->id)->where('is_manager',true)->first();
+        
+        
+        $company_id = $company->id;
+        $visits = Visit::whereHas('company',function($query) use ($company_id){
+                $query->where('id',$company_id);
+            })->with(['client','resource'])->paginate(10);
+                
         return view('companyprofile')
             ->with(compact('company'))
             ->with(compact('comp_clients'))
             ->with(compact('location_string'))
-            ->with(compact('mana'));
+            ->with(compact('mana'))
+            ->with(compact('visits'));
     }
 
     /** ======================== Home Dabshobard ==========================

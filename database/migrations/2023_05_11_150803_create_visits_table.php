@@ -16,11 +16,8 @@ class CreateVisitsTable extends Migration
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            // foregin key on company
             $table->bigInteger('company_id')->nullable()->unsigned();
-            // foregin key on client
             $table->bigInteger('client_id')->nullable()->unsigned();
-            // foregin key on resource
             $table->bigInteger('resource_id')->nullable()->unsigned();
             $table->dateTime('visit_start_date');
             $table->dateTime('visit_end_date')->nullable();

@@ -9,18 +9,28 @@ use Illuminate\Support\Str;
 use Faker\Factory as Faker;
 use App\Models\User;
 use Carbon\Carbon;
-use Goutte\Client;
+// use Goutte\Client;
 use App\Models\Resource;
 use App\Models\Company;
+use App\Models\Visit;
 use Hash;
 
 class Testcontroller extends Controller
 {
     public function other(){
+
+
+
+        $vt = Visit::where('id',3)->with(['client','resource'])->first();
+        dd($vt->client->full_name);
+        // dd($$vt->getLocationFromAttribute()());
+
+
+
         // list companies that doesnt have a list one manager
-        $comps = Company::whereDoesntHave("users",function($query){
-            $query->where('is_manager', true);
-        })->get();
+        // $comps = Company::whereDoesntHave("users",function($query){
+        //     $query->where('is_manager', true);
+        // })->get();
 
         // $comps->each(function($comp, $key){
         //     $users = User::where('company_id', $comp->id)->get();
@@ -28,7 +38,7 @@ class Testcontroller extends Controller
         //     $mana->is_manager = true;
         //     $mana->save();
         // });
-        dd($comps);
+        // dd($comps);
     }
     public function get_datetime(){
         // $da = Carbon::now();

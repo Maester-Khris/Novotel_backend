@@ -107,7 +107,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/localisation">
-                            <i class="ni ni-planet text-blue"></i> Localisations
+                            <i class="ni ni-square-pin text-blue"></i> Localisations
                         </a>
                     </li>
                     <li class="nav-item">

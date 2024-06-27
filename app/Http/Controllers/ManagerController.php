@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Commodity;
 use App\Models\Resource;
 use App\Models\Visit;
 use App\Models\Client;
@@ -19,18 +20,37 @@ class ManagerController extends Controller
      * Add new
      * Note: dont forget to hash passwordds at the end
      * newCompany: Create a new Company and add it data resource, employee
+     * process have changed: now the resource created at hotel creation are only used for stats purpose
     */
     public function newCompany(Request $request){
-        // return response()->json("hello", 200);
         $comp = $request[0];
         $mana = $request[1];  
-        $res = $request[2];  
+        $resources = $request[2];  
+
         $company = new Company;
         $company = $company->create($comp);
         $manager = $company->users()->create($mana);
-        $resources = $company->resources()->createMany($res);
+        $bdcont = 0;
+        $rmcont = 0;
+        $apcont = 0;
+        foreach($resources as $res){
+            if($res["is_room"]==true){
+                $rmcont++;
+            }elseif($res["is_appartment"]==true){
+                $apcont++;
+            }else{
+                $bdcont++;
+            }
+        }
+        $utilities = Commodity::create([
+            "rooms" => $rmcont,
+            "apparts" => $apcont,
+            "beds" => $bdcont
+        ]);
+
+        $company->commodities()->save($utilities);
         $clients = Client::all();
-        return response()->json(["comp"=>$company, "mana"=>$manager, "res"=>$resources, "clts"=>$clients], 200);
+        return response()->json(["comp"=>$company, "mana"=>$manager, "clts"=>$clients, "stats"=>$utilities], 200);
     }
     public function addResource(Request $request, $companyid){
         $company = Company::find($companyid);
@@ -68,4 +88,10 @@ class ManagerController extends Controller
         $employees = $company->users;
         return response()->json($employees, 200);
     }
+    public function getCompanyResourceInfo($companyuuid){
+        $company = Company::where('uuid',$companyuuid)->first();
+        return response()->json($company->commodities, 200);
+    }
 }
+// ================================================
+// $resources = $company->resources()->createMany($res);

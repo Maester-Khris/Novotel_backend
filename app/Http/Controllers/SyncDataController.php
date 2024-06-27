@@ -42,8 +42,14 @@ class SyncDataController extends Controller
             case 'employees':
                 $comp = Company::where('uuid',$request->data[0]["company_uuid"])->first();
                 foreach ($request->data as $entity) {
-                    $emp = User::create($entity);
-                    $comp->users()->save($emp);
+                    $existing_model = User::where('uuid',$entity['uuid'])->first();
+                    if($existing_model != null){
+                        $existing_model->password = $entity['password'];
+                        $existing_model->save();
+                    }else{
+                        $emp = User::create($entity);
+                        $comp->users()->save($emp);
+                    }
                 }
                 break;
             case 'visits':

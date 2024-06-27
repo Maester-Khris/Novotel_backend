@@ -29,6 +29,9 @@ Route::post('/company/{companyid}/getvisit', 'App\Http\Controllers\ManagerContro
 Route::post('/company/{companyid}/addresource', 'App\Http\Controllers\ManagerController@addResource');
 Route::post('/company/{companyid}/addreceptionist', 'App\Http\Controllers\ManagerController@addReceptionist');
 
+Route::post('/company/resources-stats/{companyuuid}', 'App\Http\Controllers\ManagerController@getCompanyResourceInfo');
+
+
 // =============== Reception Route ===========================
 Route::get('/client/all', 'App\Http\Controllers\ReceptionController@allClient');
 Route::post('/client/new', 'App\Http\Controllers\ReceptionController@newClient');

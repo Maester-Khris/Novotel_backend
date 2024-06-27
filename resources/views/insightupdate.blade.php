@@ -84,23 +84,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($all_visits as $entry)
+                            @if(count($all_visits)==0)
+                                @foreach ($companies_from_location as $comp)
                                 <tr>
-                                    <td> <a href="{{url('/company-profile', $entry->company->comp_name)}}">{{$entry->company->comp_name}}</a>  </td>
-                                    <td>{{$entry->client->full_name}}</td>
-                                    <td>{{$entry->client->telephone}}</td>
-                                    <td>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $entry->visit_start_date)->format('F j, Y');}}</td>
-                                    <td>
-                                        <span class="badge badge-dot mr-4">
-                                            @if($entry->visit_end_date == null)
-                                                <i class="bg-warning"></i> En Cours
-                                            @else
-                                                <i class="bg-success"></i> Complété
-                                            @endif
-                                        </span>
-                                    </td>
+                                    <td> <a href="{{url('/company-profile', $comp->comp_name)}}">{{$comp->comp_name}}</a>  </td>
+                                    <td>/</td>
+                                    <td>/</td>
+                                    <td>/</td>
+                                    <td>/</td>
                                 </tr>
-                            @endforeach
+                                @endforeach
+                            @else
+                                @foreach ($all_visits as $entry)
+                                    <tr>
+                                        <td> <a href="{{url('/company-profile', $entry->company->comp_name)}}">{{$entry->company->comp_name}}</a>  </td>
+                                        <td>{{$entry->client->full_name}}</td>
+                                        <td>{{$entry->client->telephone}}</td>
+                                        <td>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $entry->visit_start_date)->format('F j, Y');}}</td>
+                                        <td>
+                                            <span class="badge badge-dot mr-4">
+                                                @if($entry->visit_end_date == null)
+                                                    <i class="bg-warning"></i> En Cours
+                                                @else
+                                                    <i class="bg-success"></i> Complété
+                                                @endif
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
